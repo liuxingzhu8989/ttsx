@@ -1,13 +1,15 @@
+{# 首页 注册 登录页 #}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+{% load staticfiles %}
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title>{{title}}-天天生鲜</title>
-	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
-    <script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
-    {%block head%} {%endblock head%}
-     {% if request.session.user_name|default:'' != '' %}
+	<title>{% block title %} {% endblock title %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    {# 网页顶部预留块 #}
+    {% block topfiles %}{% endblock topfiles %}
+    {% if request.session.user_name|default:'' != '' %}
         <script>
             $(function () {
                f();
@@ -21,6 +23,8 @@
     {% endif %}
 </head>
 <body>
+{# 网页顶部 #}
+{% block header_con %}
 	<div class="header_con">
 		<div class="header">
 			<div class="welcome fl">欢迎来到天天生鲜!</div>
@@ -31,7 +35,7 @@
 				{% if request.session.user_name|default:'' != '' %}
                     <div class="login_btn fl">
                         <a>欢迎您:</a>
-                        <a>{{request.session.user_name}}</a>
+                        <a>{{ username }}</a>
                         <span>|</span>
                         <a href="/user/logout/">注销</a>
                     </div>
@@ -53,6 +57,10 @@
 			</div>
 		</div>
 	</div>
+{% endblock header_con %}
+
+{# 网页顶部搜索块 #}
+{% block search_bar %}
     <div class="search_bar clearfix">
 		<a href="/" class="logo fl"><img src="/static/images/logo.png"></a>
 		<form class="search_con fl" action="/search/" method='get'>
@@ -64,7 +72,10 @@
 			<div class="goods_count fl" id="show_count" ></div>
 		</div>
 	</div>
-    {% block body %}{% endblock body %}
+{% endblock search_bar %}
+
+{# 网页主体 #}
+{% block body %}
 
 <div class="footer">
 		<div class="foot_link">
@@ -80,5 +91,12 @@
 		<p>电话：010-****888    京ICP备*******8号</p>
 	</div>
 
+    {# 网页底部html元素块 #}
+    {% block bottom %} {% endblock bottom %}
+
+    {# 网页底部引入文件块#}
+    {% block bootomfiles %}{% endblock bootomfiles %}
+
+{% endblock body %}
 </body>
 </html>
