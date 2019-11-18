@@ -47,7 +47,7 @@ $(function(){			//$(function()){}等价于$(document).ready(function(){})
 		}
 		else
 		{
-			$.get('/user/register_handle/?uname='+$('#user_name').val(), function (data) {
+			$.get('/user/register/?uname='+$('#user_name').val(), function (data) {
 				if (data.count == 1){
 					$('#user_name').next().html('用户名已存在').show();
 					error_name = true;
