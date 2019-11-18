@@ -69,3 +69,16 @@ class User:
 		verbose_name_plural = verbose_name
 ```
 
+
+
+
+
+```
+    list_display=('title', 'publisher')
+    list_filter = ('publication_date',)
+    search_fields=('first_name',)
+    date_hierarchy = 'publication_date'
+    filter_horizontal = ('authors',)
+    raw_id_fields = ('publisher', )
+```
+
