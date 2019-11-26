@@ -62,7 +62,7 @@
 {# 网页顶部搜索块 #}
 {% block search_bar %}
     <div class="search_bar clearfix">
-		<a href="/" class="logo fl"><img src="/static/images/logo.png"></a>
+		<a href="/" class="logo fl"><img src="{% static 'images/logo.png' %}"></a>
 		<form class="search_con fl" action="/search/" method='get'>
 			<input type="text" class="input_text fl" name="q" placeholder="搜索商品">
 			<input type="submit" class="input_btn fr" value="搜索">
@@ -76,8 +76,7 @@
 
 {# 网页主体 #}
 {% block body %}
-
-<div class="footer">
+    <div class="footer">
 		<div class="foot_link">
 			<a href="#">关于我们</a>
 			<span>|</span>
@@ -96,7 +95,8 @@
 
     {# 网页底部引入文件块#}
     {% block bootomfiles %}{% endblock bootomfiles %}
-
-{% endblock body %}
 </body>
 </html>
+
+
+{% endblock body %}

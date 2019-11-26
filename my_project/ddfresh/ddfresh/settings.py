@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tinymce',
+    'haystack',
     'user',
     'goods',
     'cart',
@@ -133,6 +134,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 
+
 TINYMCE_DEFAUT_CONFIG = {
     'theme': 'advances',
     'width': 600,
@@ -152,18 +154,32 @@ EMAIL_FROM = 'ttsx<maoshuai_work@163.com>'
 
 
 #django cache
-#CACHES = {
-#    "default": {
-#        "BACKEND": "django_redis.cache.RedisCache",
-#        "LOCATION": "redis://127.0.0.1:6379/1",
-#        "OPTIONS": {
-#            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#        }
-#    }
-#}
-#
-##django session
-#SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-#SESSION_CACHE_ALIAS = "default"
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+#django session
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
 
 LOGIN_URL='/user/login/'
+
+DEFAULT_FILE_STORAGE='utils.fdfs.storage.FDFSStorage'
+CLIENT_CONF='./utils/fdfs/client.conf'
+BASE_URL='http://127.0.0.1:9002/'
+
+HAYSTACK_CONNECTIONS = {
+    'default':{
+        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
+        #'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoose_index'),
+    }
+}
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
