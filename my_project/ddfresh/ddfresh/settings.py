@@ -176,8 +176,8 @@ BASE_URL='http://127.0.0.1:9002/'
 
 HAYSTACK_CONNECTIONS = {
     'default':{
-        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
-        #'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        #'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
         'PATH': os.path.join(BASE_DIR, 'whoose_index'),
     }
 }
