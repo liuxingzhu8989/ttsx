@@ -3,10 +3,15 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.shortcuts import render
 from django.template import loader,RequestContext
-from goods.models import GoodsType, IndexGoodsBanner, IndexTypeGoodsBanner,IndexPromotionBanner
 from django.views.generic import View
 from django_redis import get_redis_connection
 
+import os
+import django
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ddfresh.settings')
+django.setup()
+
+from goods.models import GoodsType, IndexGoodsBanner, IndexTypeGoodsBanner,IndexPromotionBanner
 app = Celery('celery_tasks.tasks', broker='redis://127.0.0.1:6379/0')
 
 @app.task
@@ -23,8 +28,8 @@ def send_email_to_verify(email, username, token):
 def generate_index_page():
     types = GoodsType.objects.all()
     goods_banners = IndexGoodsBanner.objects.all()
-    type_goods_banners = IndexTypeGoodsBanner.objects.all()
-    promotion_banners = IndexPromotionBanner.objects.all()
+    type_goods_banners = IndexTypeGoodsBanner.objects.all().order_by('index')
+    promotion_banners = IndexPromotionBanner.objects.all().order_by('index')
 
     context = {'types':types,
                 'goods_banners': goods_banners,
@@ -36,5 +41,5 @@ def generate_index_page():
     index_static = temp.render(context)
     
     save_path = os.path.join(settings.BASE_DIR, 'static/index.html')    
-    with open(save_path) as f:
+    with open(save_path, "w") as f:
         f.write(index_static)
