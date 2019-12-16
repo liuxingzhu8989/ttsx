@@ -1,0 +1,84 @@
+1. git配置
+
+   配置git账号
+
+   ```
+   [ms@localhost new_project]$ git config --global user.name "liuxingzhu8989"
+   [ms@localhost new_project]$ git config --global user.email "liuxingzhu8989@163.com"
+   ```
+
+   查看git配置
+
+   ```
+   [ms@localhost new_project]$ git config --list
+   user.name=liuxingzhu898
+   user.email=liuxingzhu8989@163.com
+   push.default=simple
+   core.repositoryformatversion=0
+   core.filemode=true
+   core.bare=false
+   core.logallrefupdates=true
+   remote.origin.url=git@github.com:liuxingzhu8989/ttsx.git
+   remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+   branch.master.remote=origin
+   branch.master.merge=refs/heads/master
+   ```
+
+2. python安装
+
+   安装依赖库
+
+   ```
+   yum -y install wget gcc zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel libffi-devel
+   ```
+
+   安装python3
+
+   ```
+   # python包
+   wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tgz
+   
+   #解压
+   tar -xvf Python-3.7.3.tar
+   
+   #进入目录
+   cd Python-3.7.3
+   
+   #安装
+   ./configure --prefix=/usr/local/python37 --enable-optimizations
+   sudo make && make install
+   ```
+
+   修改.bash_profile,加入PATH
+
+   ```
+   #修改bash文件
+   vim .bash_profile
+   
+   #export path
+   export PATH=$PATH:/usr/local/python37/bin
+   
+   #激活
+   source ~/.bash_profile
+   ```
+
+3. 虚拟环境
+
+   创建环境
+
+   ```
+   [ms@localhost ttsx]$ python -m venv new_venv
+   ```
+
+   激活虚拟环境
+
+   ```
+   [ms@localhost ttsx]$ source new_venv/bin/activate
+   ```
+
+   #退出虚拟机环境
+
+   ```
+   (new_venv) [ms@localhost ttsx]$ deactive
+   ```
+
