@@ -1,9 +1,9 @@
 from django.db import models
-from db.models import BaseModels
+from db.models import BaseModel
 from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-class User(BaseModels, AbstractUser):
+class User(BaseModel, AbstractUser):
     '''用户模型类
     '''
     class Meta:
@@ -20,7 +20,7 @@ class AddressManager(models.Manager):
 
         return address
     
-class Address(BaseModels):
+class Address(BaseModel):
     user = models.ForeignKey('User', verbose_name='用户', on_delete='CASCADE')
     receiver = models.CharField(max_length=100)
     addr = models.CharField(max_length=100)
