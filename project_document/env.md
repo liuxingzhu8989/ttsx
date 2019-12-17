@@ -82,3 +82,62 @@
    (new_venv) [ms@localhost ttsx]$ deactive
    ```
 
+4. 安装django相关包
+
+   升级
+
+   ```
+   pip3 install --upgrade pip
+   ```
+
+   安装django
+
+   ```
+   pip3 install django==2.1.8
+   ```
+
+   <hr>
+
+   #解决超时问题
+
+   ```
+   pip install numpy -i https://pypi.doubanio.com/simple/
+   ```
+
+   #其他相关命令
+
+   查看包
+
+   ```
+   pip show --file package-name
+   ```
+
+   升级包
+
+   ```
+   pip install --upgrade package-name
+   ```
+
+   卸载包
+
+   ```
+   pip uninstall package-name
+   ```
+
+   待更新包
+
+   ```
+   pip list --outdate
+   ```
+
+5. mysql安装 #TODO
+
+   安装pymysql
+
+   ```
+   (new_venv) [ms@localhost new_project]$ pip3 install pymysql
+   ```
+
+   
+
+   

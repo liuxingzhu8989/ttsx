@@ -1,0 +1,4 @@
+1. env.md
+2. django_project.md
+3. user directory
+
