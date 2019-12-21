@@ -3,9 +3,9 @@
    创建文件
 
    ```
-   (new_venv) [ms@localhost new_project]$ mkdir base_model
-   (new_venv) [ms@localhost new_project]$ touch base_model/__init__.py
-   (new_venv) [ms@localhost new_project]$ vi base_model/models.py
+   (venv) [ms@localhost ttsx_exercide]$ mkdir base_model
+   (venv) [ms@localhost ttsx_exercide]$ touch base_model/__init__.py
+   (venv) [ms@localhost ttsx_exercide]$ vi base_model/models.py
    ```
 
    修改models文件
@@ -42,7 +42,7 @@
            verbose_name_plural = 'user_p'
    ```
 
-3. 修改new_project/settings.py,加入
+3. 修改ttsx_exercide/settings.py,加入
 
    ```
    #apps/user/apps.py下有name=user, 自动导入app下models
@@ -54,17 +54,17 @@
    创建database
 
    ```
-   (new_venv) [ms@localhost new_project]$ mysql -u root -p
+   (venv) [ms@localhost ttsx_exercide]$ mysql -u root -p
    
    mysql> show databases;
-   mysql> create database db_ttsx default charset utf8;
+   mysql> create database ttsx_exercide default charset utf8;
    ```
 
    生成数据迁移文件，orm生成table
 
    ```
-   (new_venv) [ms@localhost new_project]$ python manage.py makemigrations
-   (new_venv) [ms@localhost new_project]$ python manage.py migrate
+   (venv) [ms@localhost ttsx_exercide]$ python manage.py makemigrations
+   (venv) [ms@localhost ttsx_exercide]$ python manage.py migrate
    ```
 
 5. admin管理用户
@@ -72,13 +72,13 @@
    创建超级用户
 
    ```
-   (new_venv) [ms@localhost new_project]$ python manage.py createsuperuser
+   (venv) [ms@localhost ttsx_exercide]$ python manage.py createsuperuser
    ```
 
    将user加入到admin
 
    ```
-   [ms@localhost new_project]$ vi apps/user/admin.py 
+   [ms@localhost ttsx_exercide]$ vi apps/user/admin.py 
    
    #code
    from user.models import User
@@ -91,7 +91,7 @@
    启动server
 
    ```
-   (new_venv) [ms@localhost new_project]$ python manage.py runserver
+   (venv) [ms@localhost ttsx_exercide]$ python manage.py runserver
    ```
 
    web访问admin
