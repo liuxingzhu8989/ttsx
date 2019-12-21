@@ -99,44 +99,62 @@
    <hr>
 #解决超时问题
    
-```
+   ```
    pip install numpy -i https://pypi.doubanio.com/simple/
    ```
    
-#其他相关命令
+   #其他相关命令
    
-查看包
+   查看包
    
-```
+   ```
    pip show --file package-name
    ```
    
-升级包
+   升级包
    
-```
+   ```
    pip install --upgrade package-name
    ```
    
-卸载包
+   卸载包
    
-```
+   ```
    pip uninstall package-name
    ```
    
-待更新包
+   待更新包
    
-```
-   pip list --outdate
    ```
-   
+   pip list --outdate         
+   ```
+
 5. mysql安装 #TODO
 
    安装pymysql
 
    ```
-   (new_venv) [ms@localhost new_project]$ pip3 install pymysql
+   (venv) [ms@localhost ttsx_exercide]$ pip3 install pymysql
+   ```
+
+6. 安装redis
+
+   ```
+   (venv) [ms@localhost ttsx_exercide]$ sudo yum -y install redis
+   ```
+
+   启动
+
+   ```
+   (venv) [ms@localhost ttsx_exercide]$ redis-server &
+   ```
+
+   检查
+
+   ```
+   (venv) [ms@localhost ttsx_exercide]$ redis-cli 
+   127.0.0.1:6379> 
    ```
 
    
 
-   
