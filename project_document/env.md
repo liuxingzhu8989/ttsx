@@ -67,19 +67,19 @@
    创建环境
 
    ```
-   [ms@localhost ttsx]$ python -m venv new_venv
+   [ms@localhost ttsx]$ python -m venv venv
    ```
 
    激活虚拟环境
 
    ```
-   [ms@localhost ttsx]$ source new_venv/bin/activate
+   [ms@localhost ttsx]$ source venv/bin/activate
    ```
 
    #退出虚拟机环境
 
    ```
-   (new_venv) [ms@localhost ttsx]$ deactive
+   (venv) [ms@localhost ttsx]$ deactive
    ```
 
 4. 安装django相关包
@@ -97,39 +97,38 @@
    ```
 
    <hr>
-
-   #解决超时问题
-
-   ```
+#解决超时问题
+   
+```
    pip install numpy -i https://pypi.doubanio.com/simple/
    ```
-
-   #其他相关命令
-
-   查看包
-
-   ```
+   
+#其他相关命令
+   
+查看包
+   
+```
    pip show --file package-name
    ```
-
-   升级包
-
-   ```
+   
+升级包
+   
+```
    pip install --upgrade package-name
    ```
-
-   卸载包
-
-   ```
+   
+卸载包
+   
+```
    pip uninstall package-name
    ```
-
-   待更新包
-
-   ```
+   
+待更新包
+   
+```
    pip list --outdate
    ```
-
+   
 5. mysql安装 #TODO
 
    安装pymysql

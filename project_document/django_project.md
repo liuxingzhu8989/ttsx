@@ -1,23 +1,39 @@
 1. 生成project项目
 
    ```
-   (new_venv) [ms@localhost new_project]$ django-admin startproject new_project .
+   (venv) [ms@localhost ttsx_exercide]$ django-admin startproject ttsx_exercide .
    ```
 
 2. 生成app
 
    ```
    #创建目录
-   (new_venv) [ms@localhost new_project]$ mkdir apps
+   (venv) [ms@localhost ttsx_exercide]$ mkdir apps
    
    #创建user, goods, order, cart
-   (new_venv) [ms@localhost new_project]$ mkdir apps/user
-   (new_venv) [ms@localhost new_project]$ mkdir apps/goods
-   (new_venv) [ms@localhost new_project]$ mkdir apps/order
-   (new_venv) [ms@localhost new_project]$ mkdir apps/cart
+   (venv) [ms@localhost ttsx_exercide]$ mkdir apps/user
+   (venv) [ms@localhost ttsx_exercide]$ mkdir apps/goods
+   (venv) [ms@localhost ttsx_exercide]$ mkdir apps/order
+   (venv) [ms@localhost ttsx_exercide]$ mkdir apps/cart
+   ==============================================================
+   mkdir apps/user
+   mkdir apps/goods
+   mkdir apps/order
+   mkdir apps/cart
+   
+   #创建app
+   (venv) [ms@localhost ttsx_exercide]$ django-admin startapp user apps/user/
+   (venv) [ms@localhost ttsx_exercide]$ django-admin startapp goods apps/goods/
+   (venv) [ms@localhost ttsx_exercide]$ django-admin startapp order apps/order/
+   (venv) [ms@localhost ttsx_exercide]$ django-admin startapp cart apps/cart/
+   =========================================================================
+   django-admin startapp user apps/user/
+   django-admin startapp goods apps/goods/
+   django-admin startapp order apps/order/
+   django-admin startapp cart apps/cart/
    ```
 
-3. 更改new_project/settings.py
+3. 更改ttsx_exercide/settings.py
 
    ```
    #将app加入目录
@@ -64,15 +80,18 @@
 4. 添加templates和static 文件夹
 
    ```
-   (new_venv) [ms@localhost new_project]$ mkdir static
-   (new_venv) [ms@localhost new_project]$ mkdir templates
+   (venv) [ms@localhost ttsx_exercide]$ mkdir static
+   (venv) [ms@localhost ttsx_exercide]$ mkdir templates
+   ========================================================
+   mkdir static
+   mkdir templates
    ```
 
-5. 更改new_project/\__init__.py,加上
+5. 更改ttsx_exercide/\__init__.py,加上
 
    ```
    import pymysql
-   pymysql.Install_as_MySQLdb()
+   pymysql.install_as_MySQLdb()
    ```
 
 6. 测试配置是否正确
