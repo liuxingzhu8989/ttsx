@@ -1,11 +1,16 @@
 1. 创建basemodel,加入create time, update time, delete time
 
+   创建文件
+
    ```
    (new_venv) [ms@localhost new_project]$ mkdir base_model
    (new_venv) [ms@localhost new_project]$ touch base_model/__init__.py
    (new_venv) [ms@localhost new_project]$ vi base_model/models.py
-   
-   #modify models文件
+   ```
+
+   修改models文件
+
+   ```
    from django.db import models
    
    class BaseModel(models.Model):
@@ -44,7 +49,9 @@
    AUTH_USER_MODEL = 'user.User'
    ```
 
-4. 创建database
+4. 数据库操作
+
+   创建database
 
    ```
    (new_venv) [ms@localhost new_project]$ mysql -u root -p
@@ -53,14 +60,14 @@
    mysql> create database db_ttsx default charset utf8;
    ```
 
-5. 生成数据迁移文件，orm生成table
+   生成数据迁移文件，orm生成table
 
    ```
    (new_venv) [ms@localhost new_project]$ python manage.py makemigrations
    (new_venv) [ms@localhost new_project]$ python manage.py migrate
    ```
 
-6. admin管理用户
+5. admin管理用户
 
    创建超级用户
 
@@ -79,7 +86,7 @@
    admin.site.register(User)
    ```
 
-7. 测试
+6. 测试
 
    启动server
 
@@ -94,8 +101,6 @@
    ```
 
    GUI可编辑用户
-
-
 
 
 

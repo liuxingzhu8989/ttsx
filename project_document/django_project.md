@@ -32,6 +32,14 @@
        'order',
    ]
    
+   #设置template文件夹
+   TEMPLATES = [
+       {
+           ...
+           'DIRS': [os.path.join(BASE_DIR, "templates")],
+            ...
+       }
+   ]
    #设置数据库
    DATABASES = {
        'default': {
@@ -47,16 +55,27 @@
    #设置语言，地区
    LANGUAGE_CODE = 'zh-hans'
    TIME_ZONE = 'Asia/Chongqing'
+   
+   #设置static file dirctory
+   #STATIC_URL = '/static/'
+   STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
    ```
 
-4. 更改new_project/\__init__.py,加上
+4. 添加templates和static 文件夹
+
+   ```
+   (new_venv) [ms@localhost new_project]$ mkdir static
+   (new_venv) [ms@localhost new_project]$ mkdir templates
+   ```
+
+5. 更改new_project/\__init__.py,加上
 
    ```
    import pymysql
    pymysql.Install_as_MySQLdb()
    ```
 
-5. 测试配置是否正确
+6. 测试配置是否正确
 
    ```
    (new_venv) [ms@localhost new_project]$ python manage.py runserver
