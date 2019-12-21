@@ -1,16 +1,22 @@
 from django.shortcuts import render
 
 #html_page_str
+ #RegisterView,LoginView
 register_html = "register.html"
 login_html = "login.html"
 index_html = "index.html"
+
+ #InfoView, OrderView, SiteView
+user_info  = 'user_center_info.html'
+user_order = 'user_center_order.html'
+user_site  = 'user_center_site.html'
 
 #RegisterView
 from django.views.generic import View
 from user.models import User
 
-#LoginView
-from django.contrib.auth import authenticate, login
+#LoginView, LogOutView
+from django.contrib.auth import authenticate, login, logout
 
 class RegisterView(View):
     def get(self, request):
@@ -76,3 +82,23 @@ class LoginView(View):
                 return render(request, login_html)
         else:
             return render(request, login_html)
+
+class LogOutView(View):
+    def get(self, request):
+        logout(request)
+        return render(request, index_html)
+
+#/user/info
+class InfoView(View):
+    def get(self, request):
+        return render(request, user_info, {'page':'info'})
+    
+#/user/order
+class OrderView(View):
+    def get(self, request):
+        return render(request, user_order, {'page':'order'})
+
+#/user/site
+class SiteView(View):
+    def get(self, request):
+        return render(request, user_site, {'page':'site'})
