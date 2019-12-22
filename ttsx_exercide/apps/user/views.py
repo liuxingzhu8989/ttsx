@@ -1,4 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
+
+from util.mixin import LoginRequiredMixin
 
 #html_page_str
  #RegisterView,LoginView
@@ -13,10 +16,13 @@ user_site  = 'user_center_site.html'
 
 #RegisterView
 from django.views.generic import View
-from user.models import User
+from user.models import User, Address
 
 #LoginView, LogOutView
 from django.contrib.auth import authenticate, login, logout
+
+#Redis as cache
+from django_redis import get_redis_connection
 
 class RegisterView(View):
     def get(self, request):
@@ -72,7 +78,8 @@ class LoginView(View):
             if user.is_active:
                 login(request, user)
                 remember = request.POST.get('remember') #add all 7 lines
-                res = render(request, index_html) #add, only res has set_cookie()
+                next_url = request.GET.get('next', reverse("goods:index"))
+                res = redirect(next_url) 
                 if remember == 'on':
                     res.set_cookie('username', username, 7*24*3600)
                 else:
@@ -86,19 +93,60 @@ class LoginView(View):
 class LogOutView(View):
     def get(self, request):
         logout(request)
-        return render(request, index_html)
+        return redirect(reverse("goods:index"))
 
 #/user/info
-class InfoView(View):
+class InfoView(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, user_info, {'page':'info'})
+        user = request.user
+        address = Address.objects.get_default_address(user)
+
+        con = get_redis_connection("default")
+        history_key = 'history_user%d'%user.id
+        sku_ids = con.lrange(history_key, 0, 4)
+        
+        goods_li = []
+        for id in sku_ids:
+            goods = GoodsSKU.objects.get(id=id)
+            goods_li.append(goods)
+        
+        return render(request, user_info, {'page':'info', 'address':address, 'good_li':goods_li})
     
 #/user/order
-class OrderView(View):
+class OrderView(LoginRequiredMixin,View):
     def get(self, request):
         return render(request, user_order, {'page':'order'})
 
-#/user/site
-class SiteView(View):
+#/user/address
+class SiteView(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, user_site, {'page':'site'})
+        user = request.user
+        address = Address.objects.get_default_address(user)
+        return render(request, user_site, {'page':'site', 'address':address})
+
+    def post(self, request):
+        #1.接收数据
+        receiver = request.POST.get('receiver')
+        addr = request.POST.get('addr')
+        phone = request.POST.get('phone')
+        zip_code = request.POST.get('zip_code')
+        
+        #2.校验
+        if not all((receiver, addr, phone)):
+            return render(request, user_site, {'errmsg': '数据不完整'})
+
+        #手机号
+        #if not re.match(r'^1[3|4|5|6]\d{9}', phone):
+        #    return render(request, user_site, {'errmsg': '手机格式不对'})
+
+        #3.业务处理
+        user = request.user
+        address = Address.objects.get_default_address(user)
+
+        if address:
+            is_default = False
+        else:
+            is_default = True
+           
+        Address.objects.create(user = user, receiver = receiver, addr = addr, phone_number = phone, zip_code = zip_code, is_default = is_default) 
+        return redirect(reverse("user:site"))
