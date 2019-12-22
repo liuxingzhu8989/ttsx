@@ -145,3 +145,5 @@ CACHES = {
         }
     }
 }
+
+DEFAULT_FILE_STORAGE = 'util.fdfs.storage.FDFSStorage'
