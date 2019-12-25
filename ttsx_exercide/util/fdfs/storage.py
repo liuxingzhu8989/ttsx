@@ -1,5 +1,7 @@
 from django.core.files.storage import Storage
 from fdfs_client.client import Fdfs_client
+from django.conf import settings
+
 class FDFSStorage(Storage):
     def __init__(self, client_conf=None, base_url=None):
         if not client_conf:
@@ -23,14 +25,16 @@ class FDFSStorage(Storage):
         #}
         client = Fdfs_client(self.client_conf)
         res = client.upload_by_buffer(content.read())
-        if res.get('Status') != 'Upload successed.'
+        if res.get('Status') != 'Upload successed.':
             raise Exception('upload file to fastDFS fail')
         
         filename = res.get('Remote file_id')
         return filename
 
-        def exists(self, name):
-            '''判断django服务器，名字是否可用'''
-            return False
-        def url(self,name):
-            return self.base_url+name
+    def exists(self, name):
+        '''判断django服务器，名字是否可用'''
+        return False
+
+    def url(self,name):
+        return name
+        #return self.base_url+name

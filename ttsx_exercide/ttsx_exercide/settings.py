@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'goods',
     'cart',
     'order',
+    'tinymce',
 ]
 
 MIDDLEWARE = [
@@ -147,4 +148,13 @@ CACHES = {
     }
 }
 
+#修改默认存储类
 DEFAULT_FILE_STORAGE = 'util.fdfs.storage.FDFSStorage'
+FDFS_CLIENT_CONF     = './util/fdfs/client.conf'
+FDFS_BASE_URL        = 'http://127.0.0.1:9002/'
+
+TINYMCE_DEFAULT_CONFIG = {
+    'theme': 'advanced',
+    'width': 600,
+    'height': 400,
+}
