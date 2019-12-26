@@ -10,8 +10,8 @@ class GoodsType(BaseModel):
 
     class Meta:
         db_table = 'df_goods_type'
-        verbose_name = 'good_type_v'
-        verbose_name_plural = 'good_type_p'
+        verbose_name = '商品类型'
+        verbose_name_plural = '商品类型s'
 
     def __str__(self):
         return str(self.name)
@@ -39,8 +39,8 @@ class GoodsSKU(BaseModel):
 
     class Meta:
         db_table = 'df_goods_sku'
-        verbose_name = 'goods_sku_v'
-        verbose_name_plural = 'goods_sku_p'
+        verbose_name = '商品sku'
+        verbose_name_plural = '商品skus'
 
 
 class Goods(BaseModel):
@@ -54,8 +54,8 @@ class Goods(BaseModel):
 
     class Meta:
         db_table = 'df_goods'
-        verbose_name = 'goods_v'
-        verbose_name_plural = 'goods_p'
+        verbose_name = '商品spu'
+        verbose_name_plural = '商品spus'
 
 
 class GoodsImage(BaseModel):
@@ -65,8 +65,8 @@ class GoodsImage(BaseModel):
 
     class Meta:
         db_table = 'df_goods_image'
-        verbose_name = 'goods_image_v'
-        verbose_name_plural = 'goods_image_p'
+        verbose_name = '商品图片'
+        verbose_name_plural = '商品图片s'
 
 
 class IndexGoodsBanner(BaseModel):

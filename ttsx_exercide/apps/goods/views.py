@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import View
 from goods.models import GoodsType, GoodsSKU, IndexGoodsBanner,IndexPromotionBanner,IndexTypeGoodsBanner
+from django_redis import get_redis_connection
 
 class IndexView(View):
     def get(self, request):
@@ -20,9 +21,18 @@ class IndexView(View):
                 type.image_banners = image_banners
                 type.title_banners = title_banners
 
+        cart_count = 0
+
+        conn = get_redis_connection('default')
+        user = request.user
+        if user.is_authenticated:
+            cart_key = 'cart_%d'%user.id 
+            cart_count = conn.hlen(cart_key)
+
         context = {'types': types,
                    'goods_banners': goods_banners,
-                   'promotion_banners': promotion_banners}
+                   'promotion_banners': promotion_banners,
+                   'cart_count':cart_count}
         
         return render(request, 'index.html', context)
 
