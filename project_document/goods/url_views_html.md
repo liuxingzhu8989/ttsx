@@ -9,6 +9,7 @@
    ```
    from django.shortcuts import render
    from django.views.generic import View
+   from django_redis import get_redis_connection #add the line
    
    class IndexView(View):
        def get(self, request):
@@ -27,10 +28,19 @@
                    # 动态给type增加属性，分别保存首页分类商品的图片展示信息和文字展示信息
                    type.image_banners = image_banners
                    type.title_banners = title_banners
+   	
+           cart_count = 0
+   
+           conn = get_redis_connection('default')
+           user = request.user
+           if user.is_authenticated:
+               cart_key = 'cart_%d'%user.id
+               cart_count = conn.hlen(cart_key)
    
            context = {'types': types,
                       'goods_banners': goods_banners,
-                      'promotion_banners': promotion_banners}
+                      'promotion_banners': promotion_banners,
+                      'cart_count':cart_count} #add cart_count
    
            return render(request, 'index.html', context)
    ```
@@ -136,4 +146,8 @@
    {% endblock body %}
    ```
    
-   
+4. 测试
+
+   1. mysql查看user table表，查看user_id
+   2. 进入redis,用hmset cart_userid 1 1 2 2设置值
+   3. 刷新index界面，观察购物车记录是否更改
