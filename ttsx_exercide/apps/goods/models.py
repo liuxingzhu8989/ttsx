@@ -34,6 +34,9 @@ class GoodsSKU(BaseModel):
     sales = models.IntegerField(default=0)
     status = models.SmallIntegerField(default=1, choices=status_choices)
 
+    def __str__(self):
+        return str(self.name)
+
     class Meta:
         db_table = 'df_goods_sku'
         verbose_name = 'goods_sku_v'
@@ -45,6 +48,9 @@ class Goods(BaseModel):
     name = models.CharField(max_length=20)
     # 富文本类型:带有格式的文本
     detail = HTMLField(blank=True)
+
+    def __str__(self):
+        return str(self.name)
 
     class Meta:
         db_table = 'df_goods'
@@ -69,10 +75,13 @@ class IndexGoodsBanner(BaseModel):
     image = models.ImageField(upload_to='banner')
     index = models.SmallIntegerField(default=0) # 0 1 2 3
 
+    def __str__(self):
+        return self.sku
+
     class Meta:
         db_table = 'df_index_banner'
-        verbose_name = 'index_banner_v'
-        verbose_name_plural = 'index_banner_p'
+        verbose_name = 'index_goods_banner_v'
+        verbose_name_plural = 'index_goods_banner_p'
 
 
 class IndexTypeGoodsBanner(BaseModel):
@@ -84,8 +93,11 @@ class IndexTypeGoodsBanner(BaseModel):
 
     type = models.ForeignKey('GoodsType', on_delete='CASCADE')
     sku = models.ForeignKey('GoodsSKU', on_delete='CASCADE')
-    display_type = models.SmallIntegerField(default=1, choices=DISPLAY_TYPE_CHOICES)
+    display_type = models.SmallIntegerField(default=0, choices=DISPLAY_TYPE_CHOICES)
     index = models.SmallIntegerField(default=0)
+
+    def __str__(self):
+        return str(self.type) + "_" + str(self.sku) + "_" + str(self.DISPLAY_TYPE_CHOICES[self.display_type][1])
 
     class Meta:
         db_table = 'df_index_type_goods'
@@ -99,6 +111,9 @@ class IndexPromotionBanner(BaseModel):
     url = models.CharField(max_length=256)
     image = models.ImageField(upload_to='banner')
     index = models.SmallIntegerField(default=0)
+
+    def __str__(self):
+        return str(self.name)
 
     class Meta:
         db_table = 'df_index_promotion'

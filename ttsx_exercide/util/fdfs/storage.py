@@ -36,5 +36,4 @@ class FDFSStorage(Storage):
         return False
 
     def url(self,name):
-        return name
-        #return self.base_url+name
+        return self.base_url+name

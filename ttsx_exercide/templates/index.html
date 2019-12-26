@@ -23,13 +23,13 @@
 	<div class="center_con clearfix">
 		<ul class="subnav fl">
             {% for type in types %}
-			<li><a href="#model0{{ forloop.counter }}" class="{{ type.log }}">{{type.name }}</a></li>
+			<li><a href="#model0{{ forloop.counter }}" class="{{ type.logo }}">{{type.name }}</a></li>
             {% endfor %}
 		</ul>
 		<div class="slide fl">
 			<ul class="slide_pics">
                 {% for banner in goods_banners  %}
-                    <li><a href="#"><img src="{{ banner.image.url }}" alt="幻灯片"></a></li>
+                    <li><a href="#"><img src="{{ banner.image.url }}" alt="{{ banner.image }}"></a></li>
                 {% endfor %}
 			</ul>
 			<div class="prev"></div>
@@ -46,7 +46,7 @@
     {% for type in types %}
 	<div class="list_model">
 		<div class="list_title clearfix">
-			<h3 class="fl" id="model01">新鲜水果</h3>
+			<h3 class="fl" id="model0{{forloop.counter}}">{{type.name}}</h3>
 			<div class="subtitle fl">
 				<span>|</span>
                 {% for banner in type.title_banners %}
@@ -57,7 +57,7 @@
 		</div>
 
 		<div class="goods_con clearfix">
-			<div class="goods_banner fl"><img src="images/banner01.jpg"></div>
+			<div class="goods_banner fl"><img src="{{ type.image.url }}"></div>
 			<ul class="goods_list fl">
                 {% for banner in type.image_banners %}
                 <li>
