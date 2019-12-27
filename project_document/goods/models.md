@@ -91,7 +91,7 @@
        index = models.SmallIntegerField(default=0) # 0 1 2 3
    
        def __str__(self):
-           return self.sku
+           return str(self.sku)
    
        class Meta:
            db_table = 'df_index_banner'
