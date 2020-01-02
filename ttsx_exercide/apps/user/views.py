@@ -3,6 +3,11 @@ from django.urls import reverse
 
 from util.mixin import LoginRequiredMixin
 
+#celery email
+from django.conf import settings
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from celery_tasks.tasks import send_email_to_verify
+
 #html_page_str
  #RegisterView,LoginView
 register_html = "register.html"
@@ -32,7 +37,7 @@ class RegisterView(View):
         #1.获取数据
         username = request.POST.get("user_name")
         password = request.POST.get("pwd")
-        email    = request.POST.geet("email")
+        email    = request.POST.get("email")
 
         #2.校验数据
         if not all((username, password, email)):
@@ -46,11 +51,16 @@ class RegisterView(View):
 
         if not user:
             user = User.objects.create_user(username, email, password)
+            user.is_active = 0
             user.save()
 
-        #发送激活邮件
-        #TODO 
-
+        serialize = Serializer(settings.SECRET_KEY)
+        confirm = {'confirm':user.id}
+        token = serialize.dumps(confirm) 
+        token = token.decode()
+        
+        send_email_to_verify.delay(email, username, token) #add this
+        
         return render(request, login_html)
 
 class LoginView(View):
@@ -150,3 +160,20 @@ class SiteView(LoginRequiredMixin, View):
            
         Address.objects.create(user = user, receiver = receiver, addr = addr, phone_number = phone, zip_code = zip_code, is_default = is_default) 
         return redirect(reverse("user:site"))
+
+class ActiveView(View):
+    '''activate user
+    '''
+    def get(self, request, token):
+
+        serializer = Serializer(settings.SECRET_KEY, 3600)
+        try:
+            data = serializer.loads(token)
+        except SignatuureExpired as e:
+            return HttpResponse('过期')
+            
+        user_id = data['confirm']
+        user = User.objects.get(id=user_id)
+        user.is_active = 1
+        user.save()
+        return render(request, 'login.html')
