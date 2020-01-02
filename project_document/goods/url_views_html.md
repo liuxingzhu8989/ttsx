@@ -9,6 +9,7 @@
    ```
    from django.shortcuts import render
    from django.views.generic import View
+   from django_redis import get_redis_connection #add the line
    
    class IndexView(View):
        def get(self, request):
@@ -27,10 +28,19 @@
                    # 动态给type增加属性，分别保存首页分类商品的图片展示信息和文字展示信息
                    type.image_banners = image_banners
                    type.title_banners = title_banners
+   	
+           cart_count = 0
+   
+           conn = get_redis_connection('default')
+           user = request.user
+           if user.is_authenticated:
+               cart_key = 'cart_%d'%user.id
+               cart_count = conn.hlen(cart_key)
    
            context = {'types': types,
                       'goods_banners': goods_banners,
-                      'promotion_banners': promotion_banners}
+                      'promotion_banners': promotion_banners,
+                      'cart_count':cart_count} #add cart_count
    
            return render(request, 'index.html', context)
    ```
@@ -86,13 +96,13 @@
    	<div class="center_con clearfix">
    		<ul class="subnav fl">
                {% for type in types %}
-   			<li><a href="#model0{{ forloop.counter }}" class="{{ type.log }}">{{type.name }}</a></li>
+   			<li><a href="#model0{{ forloop.counter }}" class="{{ type.logo }}">{{type.name }}</a></li>
                {% endfor %}
    		</ul>
    		<div class="slide fl">
    			<ul class="slide_pics">
                    {% for banner in goods_banners  %}
-                       <li><a href="#"><img src="{{ banner.image.url }}" alt="幻灯片"></a></li>
+                       <li><a href="#"><img src="{{ banner.image.url }}" alt="{{ banner.image }}"></a></li>
                    {% endfor %}
    			</ul>
    			<div class="prev"></div>
@@ -109,7 +119,7 @@
        {% for type in types %}
    	<div class="list_model">
    		<div class="list_title clearfix">
-   			<h3 class="fl" id="model01">新鲜水果</h3>
+   			<h3 class="fl" id="model0{{forloop.counter}}">{{type.name}}</h3>
    			<div class="subtitle fl">
    				<span>|</span>
                    {% for banner in type.title_banners %}
@@ -120,7 +130,7 @@
    		</div>
    
    		<div class="goods_con clearfix">
-   			<div class="goods_banner fl"><img src="images/banner01.jpg"></div>
+   			<div class="goods_banner fl"><img src="{{ type.image.url }}"></div>
    			<ul class="goods_list fl">
                    {% for banner in type.image_banners %}
                    <li>
@@ -136,4 +146,8 @@
    {% endblock body %}
    ```
    
-   
+4. 测试
+
+   1. mysql查看user table表，查看user_id
+   2. 进入redis,用hmset cart_userid 1 1 2 2设置值
+   3. 刷新index界面，观察购物车记录是否更改
