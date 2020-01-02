@@ -35,5 +35,3 @@ class IndexView(View):
                    'cart_count':cart_count}
         
         return render(request, 'index.html', context)
-
-
