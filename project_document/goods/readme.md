@@ -6,7 +6,11 @@
 
 4. url_views_html.md
 
-5. celery.md
+5. celery邮箱.md
+
+6. celery静态页面.md
+
+   
 
    
 
