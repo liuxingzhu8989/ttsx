@@ -3,4 +3,5 @@
 3. user directory
 4. fastDFS directory
 5. goods directory
+6. 部署uwsgi
 
