@@ -38,4 +38,3 @@ class Address(BaseModel):
         db_table = 'df_address'
         verbose_name = 'address_v'
         verbose_name_plural = 'user_p'
-    
