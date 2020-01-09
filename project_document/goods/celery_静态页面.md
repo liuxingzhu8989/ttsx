@@ -73,4 +73,47 @@
            }  #配置为celery目录
    ```
 
+   启动
+
+   ```
+   (venv) [ms@localhost ttsx_exercide]$ sudo /usr/local/nginx/sbin/nginx
+   ```
+
+   查看
+
+   ```
+   (venv) [ms@localhost ttsx_exercide]$ ps -ef|grep nginx
+   root      9699     1  0 09:14 ?        00:00:00 nginx: master process /usr/local/nginx/sbin/nginx
+   root      9700  9699  0 09:14 ?        00:00:00 nginx: worker process
+   ms        9715  5338  0 09:15 pts/2    00:00:00 grep --color=auto nginx
+   ```
+
+4. admin更新静态页面
+
+   ```
+   (venv) [ms@localhost ttsx_exercide]$ vi apps/goods/admin.py 
+   ```
+
+   #admin.py
+
+   ```
+   #celery 静态页面
+   from celery_tasks.tasks import generate_static_index
    
+   #类
+   class IndexPromotionBannerAdmin(admin.ModelAdmin):
+       def save_model(self, request, obj, form, change):
+           super().save_model(request, obj, form, change)
+           generate_static_index.delay()
+   
+       def delete_model(self, request, obj):
+           super().delete_model(self, request, obj)
+           generate_static_index.delay()
+           
+   #注册
+   admin.site.register(IndexPromotionBanner, IndexPromotionBannerAdmin)
+   ```
+
+5. 测试
+
+   打开admin站点，更改促销活动图片，观察首页是否刷新
