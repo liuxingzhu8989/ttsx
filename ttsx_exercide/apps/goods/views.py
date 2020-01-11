@@ -9,6 +9,9 @@ from django.core.cache import cache
 #商品详情
 from order.models import OrderGoods
 
+#list信息
+from django.core.paginator import Paginator 
+
 class IndexView(View):
     def get(self, request):
         context = cache.get('index_page')
@@ -90,3 +93,74 @@ class DetailView(View):
                    'cart_count':cart_count}
 
         return render(request, 'detail.html', context)
+
+class ListView(View):
+    def get(self, request, type_id, page):
+        #校验
+        try:
+            type = GoodsType.objects.get(id=type_id)
+        except GoodsType.DoesNotExist:
+            return redirect(reverse("goods:index"))
+        
+
+        #查询数据
+        types = GoodsType.objects.all()
+        sort = request.GET.get('sort')
+
+        if sort == 'price':
+            skus = GoodsSKU.objects.filter(type=type).order_by('price')
+        elif sort == 'hot':
+            skus = GoodsSKU.objects.filter(type=type).order_by('-sales')
+        else:
+            sort = 'default'
+            skus = GoodsSKU.objects.filter(type=type).order_by('-id')
+         
+        #分页
+        paginator = Paginator(skus, 1) 
+        
+        #获取指定页码内容
+        ##页面校验,不合法
+        try:
+            cur_page = int(page)
+        except Exception as e:
+            cur_page = 1 
+
+        #最大页面
+        if cur_page > paginator.num_pages:
+            cur_page = 1
+        
+        #获取指定页码对象
+        skus_page = paginator.page(cur_page)
+
+        #总页数小于5页，显示全部
+        #当前页前3页，显示1-5
+        #当前页后3页，显示后5页
+        #显示当前页前2页，当前页，后两页
+        num_pages = paginator.num_pages
+        if num_pages < 5:
+            pages = range(1,num_pages+1)
+        elif cur_page <= 3:
+            pages = range(1,6)
+        elif num_pages - cur_page <= 2:
+            pages = range(num_pages-4, num_pages+1)
+        else:
+            pages = range(cur_page-2, cur_page+3)
+
+        # 获取新品信息
+        new_skus = GoodsSKU.objects.filter(type=type).order_by('-create_time')[:2]
+        
+        user = request.user
+        cart_count = 0
+        if user.is_authenticated:
+            # 用户已登录
+            conn = get_redis_connection('default')
+            cart_key = 'cart_%d' % user.id
+            cart_count = conn.hlen(cart_key)
+
+        context = {'type':type, 'types':types,
+                   'skus_page': skus_page,
+                   'new_skus': new_skus,
+                   'pages': pages,
+                   'cart_count': cart_count,}
+ 
+        return render(request, 'list.html', context)
