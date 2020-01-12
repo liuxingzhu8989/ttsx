@@ -22,4 +22,5 @@ urlpatterns = [
     path('search/', include('haystack.urls')),
     path('user/', include('user.urls'), name = 'user'),
     path('goods/', include('goods.urls'), name = 'goods'),
+    path('cart/', include('cart.urls'), name = 'cart'),
 ]
