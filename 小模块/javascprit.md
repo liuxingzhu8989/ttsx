@@ -86,4 +86,42 @@
     csrf = $('input[name="csrfmiddlewaretoken"]').val()
     ```
 
+13. 找到父辈类型
+
+    ```
+    $('.settlements').find(':checkbox').parents('ul')
+    ```
+
+14. 找到孙子的类型
+
+    ```
+    $('.settlements').find(':checkbox').change(function(){})
+    
+    <ul class="settlements">
+            {% csrf_token %}
+    		<li class="col01"><input type="checkbox" name="" checked=""></li> #the line
+    		<li class="col02">全选</li>
+    		<li class="col03">合计(不含运费)：<span>¥</span><em>{{ total_price }}</em><br>共计<b>{{ total_count }}</b>件商品</li>
+    		<li class="col04"><input type="submit" value="去结算"></li>
+    	</ul>
+    ```
+
+15. 获取属性值
+
+    ```
+    $(.this).prop('checked', false)#默认为true
+    ```
+
+16. 遍历
+
+    ```
+    $('.settlements').find(':checkbox').each(function(){})
+    ```
+
+17. 获取checkbox所有的条目
+
+    ```
+    $('.id').length
+    ```
+
     
