@@ -3,7 +3,7 @@
    配置git账号
 
    ```
-   [ms@localhost new_project]$ git config --global user.name "liuxingzhu8989"
+   [ms@localhost new_project]$  
    [ms@localhost new_project]$ git config --global user.email "liuxingzhu8989@163.com"
    ```
 
@@ -67,7 +67,7 @@
    创建环境
 
    ```
-   [ms@localhost ttsx]$ python -m venv venv
+   [ms@localhost ttsx]$ python -m venv venv_name
    ```
 
    激活虚拟环境
@@ -97,34 +97,43 @@
    ```
 
    <hr>
-#解决超时问题
-   
+
+[解决超时问题](https://blog.csdn.net/wukai0909/article/details/62427437)
+
+#修改~/.pip/pip.conf
+
+   #~/.pip/pip.conf
+
+
    ```
-   pip install numpy -i https://pypi.doubanio.com/simple/
+[global]
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+[install]
+trusted-host=mirrors.aliyun.com
    ```
-   
+
    #其他相关命令
-   
+
    查看包
-   
+
    ```
    pip show --file package-name
    ```
-   
+
    升级包
-   
+
    ```
    pip install --upgrade package-name
    ```
-   
+
    卸载包
-   
+
    ```
    pip uninstall package-name
    ```
-   
+
    待更新包
-   
+
    ```
    pip list --outdate         
    ```

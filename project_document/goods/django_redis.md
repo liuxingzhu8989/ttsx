@@ -61,5 +61,13 @@
            return render(request, user_info, {'page':'info', 'address':address, 'good_li':goods_li}) #add goods list
    ```
 
-   #TODO
+3. 将session保存在redis,更改settings.py
+
+   #settings.py
+
+   ```
+   #SESSION_ENGINE='django.contrib.sessions.backends.cache'
+   ```
+
+   
 

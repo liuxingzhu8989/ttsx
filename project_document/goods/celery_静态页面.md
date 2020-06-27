@@ -8,6 +8,7 @@
 
    ```
    #静态页面
+   from goods.models import GoodsType, IndexGoodsBanner, IndexTypeGoodsBanner,IndexPromotionBanner
    from django.template import loader, RequestContext
    
    @app.task

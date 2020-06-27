@@ -73,7 +73,7 @@
    TIME_ZONE = 'Asia/Chongqing'
    
    #设置static file dirctory
-   #STATIC_URL = '/static/'
+   STATIC_URL = '/static/'
    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
    ```
 

@@ -32,6 +32,7 @@
 2. 修改views.py
 
    ```
+   from django.http import JsonResponse
    class CartAddView(View):
        def post(self, request):
            user = request.user
@@ -74,6 +75,6 @@
            total_count = conn.hlen(cart_key)
            # 返回应答
            return JsonResponse({'res':5, 'total_count':total_count, 'message':'添加成功'})
-   ```
-
+```
+   
    

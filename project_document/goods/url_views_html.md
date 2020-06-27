@@ -151,3 +151,4 @@
    1. mysql查看user table表，查看user_id
    2. 进入redis,用hmset cart_userid 1 1 2 2设置值
    3. 刷新index界面，观察购物车记录是否更改
+

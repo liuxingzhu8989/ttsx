@@ -14,7 +14,7 @@
 
 8. detail.md
 
-9. 商品分类.md
+9. 商品分页.md
 
 10. haystack.md
 

@@ -43,6 +43,7 @@
    ```
    from django.core.mail import send_mail
    from django.conf import settings
+   from celery import Celery
    
    #设置django环境, 先设置，然后再导入models
    import os
@@ -50,7 +51,6 @@
    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ttsx_exercide.settings')
    django.setup()
    
-   from goods.models import GoodsType, IndexGoodsBanner, IndexTypeGoodsBanner,IndexPromotionBanner
    app = Celery('celery_tasks.tasks', broker='redis://127.0.0.1:6379/1')
    
    @app.task
